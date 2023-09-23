@@ -14,7 +14,7 @@ pipeline {
                 script {
                     // Set the path to your Ansible playbook and inventory file
                     def ansiblePlaybook = "apt-update/main.yml"
-                    // def ansibleInventory = "path/to/your/inventory.ini"
+                    def ansibleInventory = "inventory.ini"
 
                     // Run the Ansible playbook using the 'ansible-playbook' command
                     sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook}"
