@@ -25,9 +25,11 @@ pipeline {
 
     post {
         success {
+	    sh "curl -d 'System updated' ${NOTIFY_URL}"
             echo 'Ansible playbook executed successfully'
         }
         failure {
+	    sh "curl -d 'System update failed' ${NOTIFY_URL}"
             echo 'Ansible playbook execution failed'
         }
     }
