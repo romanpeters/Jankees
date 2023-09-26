@@ -9,7 +9,7 @@
         url: "http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh"
         validate_certs: false
         user: admin
-        password: "{{ ROUTER_PASSWORD }}"
+        password: "{{ lookup('env', 'ROUTER_PASSWORD') }}"
         method: GET
         return_content: yes
         status_code: 200
@@ -21,7 +21,7 @@
 
     - name: Send Notification
       ansible.builtin.uri:
-        url: "{{ NOTIFY_URL }}"
+        url: "{{ lookup('env', 'NOTIFY_URL' }}"
         method: POST
         body: "Rebooting your router..."
       ignore_errors: yes
@@ -31,7 +31,7 @@
         url: "http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh"
         validate_certs: false
         user: admin
-        password: "{{ ROUTER_PASSWORD }}"
+        password: "{{ lookup('env', 'ROUTER_PASSWORD') }}"
         method: POST
         force_basic_auth: true
         status_code: 200

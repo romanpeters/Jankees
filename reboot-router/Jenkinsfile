@@ -25,12 +25,19 @@ pipeline {
 
     post {
         success {
-	    sh "curl -d 'System updated' ${NOTIFY_URL}"
-            echo 'Router was rebooted'
+            script {
+                def msg = "Router was rebooted"
+                sh "curl -d '${msg}' ${NOTIFY_URL}"
+                echo "${msg}"
+            }
         }
         failure {
-	    sh "curl -d 'System update failed' ${NOTIFY_URL}"
-            echo 'I tried to reboot your router, but failed'
+            script {
+                def msg = "I tried to reboot your router, but failed"
+                sh "curl -d '${msg}' ${NOTIFY_URL}"
+                echo "${msg}"
+            }
         }
     }
 }
+
