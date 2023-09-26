@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control
+                checkout scm
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    // Set the path to your Ansible playbook and inventory file
+                    def ansiblePlaybook = "reboot-router/main.yml"
+                    def ansibleInventory = "reboot-router/inventory.ini"
+
+                    // Run the Ansible playbook using the 'ansible-playbook' command
+                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook}"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+	    sh "curl -d 'System updated' ${NOTIFY_URL}"
+            echo 'Router was rebooted'
+        }
+        failure {
+	    sh "curl -d 'System update failed' ${NOTIFY_URL}"
+            echo 'I tried to reboot your router, but failed'
+        }
+    }
+}
