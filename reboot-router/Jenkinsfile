@@ -10,6 +10,9 @@ pipeline {
         }
 
         stage('Run Ansible Playbook') {
+	    when {
+                expression { params.DRY_RUN == 'false' }
+            }
             steps {
                 script {
                     // Set the path to your Ansible playbook and inventory file
