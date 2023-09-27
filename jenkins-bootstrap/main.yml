@@ -3,12 +3,11 @@
 
 - name: Register SSH public key content
   hosts: jenkins
-  gather_facts: no
 
   tasks:
     - name: Read jenkins SSH public key
       ansible.builtin.slurp:
-        src: /home/jenkins/ssh_id.pub
+        src: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
       register: ssh_public_key_content
 
     - name: Extract SSH public key content
@@ -17,7 +16,7 @@
 
     - name: Display SSH public key content
       debug:
-        var: ssh_key_content
+        var: jenkins_ssh_key
 
 
 - name: Bootstrap host for use with Jenkins
@@ -36,5 +35,3 @@
         user: jenkins
         state: present
         key: "{{ jenkins_ssh_key }}"
-
-          #    - name: Add jenkins to sudoers
