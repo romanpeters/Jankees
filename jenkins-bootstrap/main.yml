@@ -1,0 +1,40 @@
+---
+# must run from a control node with access to the default group
+
+- name: Register SSH public key content
+  hosts: jenkins
+  gather_facts: no
+
+  tasks:
+    - name: Read jenkins SSH public key
+      ansible.builtin.slurp:
+        src: /home/jenkins/ssh_id.pub
+      register: ssh_public_key_content
+
+    - name: Extract SSH public key content
+      set_fact:
+        jenkins_ssh_key: "{{ ssh_public_key_content.content | b64decode | replace('\n', '') }}"
+
+    - name: Display SSH public key content
+      debug:
+        var: ssh_key_content
+
+
+- name: Bootstrap host for use with Jenkins
+  hosts: default
+  gather_facts: no
+
+  tasks:
+    - name: Add user jenkins
+      ansible.builtin.user:
+        name: jenkins
+        state: present
+        uid: 110
+
+    - name: Add jenkins to authorized hosts
+      ansible.posix.authorized_key:
+        user: jenkins
+        state: present
+        key: "{{ jenkins_ssh_key }}"
+
+          #    - name: Add jenkins to sudoers
