@@ -1,6 +1,6 @@
 ---
 - name: Install package updates
-  hosts: all
+  hosts: proxmox_ubuntu_guests,proxmox,octopi
 
   tasks:
     - name: update and upgrade apt packages
