@@ -18,20 +18,13 @@
       debug:
         var: jenkins_ssh_key
 
-
 - name: Bootstrap host for use with Jenkins
-  hosts: default
+  hosts: default:!jenkins
   gather_facts: no
+  become: yes
 
   tasks:
-    - name: Add user jenkins
-      ansible.builtin.user:
-        name: jenkins
-        state: present
-        uid: 110
+    - name: Run the jenkins_user role
+      include_role:
+        name: jenkins_user
 
-    - name: Add jenkins to authorized hosts
-      ansible.posix.authorized_key:
-        user: jenkins
-        state: present
-        key: "{{ jenkins_ssh_key }}"

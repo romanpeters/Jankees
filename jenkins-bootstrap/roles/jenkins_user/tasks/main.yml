@@ -1,0 +1,13 @@
+---
+- name: Add user jenkins
+  ansible.builtin.user:
+    name: jenkins
+    state: present
+    password: '!'
+
+- name: Add jenkins to authorized hosts
+  ansible.posix.authorized_key:
+    user: jenkins
+    state: present
+    key: "{{ hostvars['jenkins']['jenkins_ssh_key'] }}"
+
