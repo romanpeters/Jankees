@@ -1,6 +1,6 @@
 ---
 - name: Install package updates
-  hosts: default!jenkins
+  hosts: default
 
   tasks:
     - name: update and upgrade apt packages

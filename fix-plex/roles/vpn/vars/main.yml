@@ -1,0 +1,3 @@
+---
+# vars file for restart-vpn
+docker_compose_path = /home/romanpeters/docker/nordvpn
