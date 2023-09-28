@@ -11,3 +11,12 @@
     state: present
     key: "{{ hostvars['jenkins']['jenkins_ssh_key'] }}"
 
+- name: Add passwordless sudo
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    create: true
+    mode: 0440
+    line: "jenkins		ALL=(ALL:ALL) NOPASSWD:ALL"
+    validate: /usr/sbin/visudo -cf %s
+
