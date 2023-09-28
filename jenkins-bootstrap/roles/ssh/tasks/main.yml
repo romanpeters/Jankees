@@ -1,0 +1,5 @@
+- name: Get public SSH key
+  ansible.builtin.fetch:
+    src: /var/lib/jenkins/.ssh/id_rsa.pub
+    dest: /tmp/ansible/id_rsa.pub
+    flat: true

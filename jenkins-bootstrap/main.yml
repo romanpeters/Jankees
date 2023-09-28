@@ -1,30 +1,13 @@
 ---
-# must run from a control node with access to the default group
+- hosts: jenkins
+  roles:
+    - role: ssh
 
-- name: Register SSH public key content
-  hosts: jenkins
+- hosts: default
+  roles:
+    - role: jenkins_user
 
-  tasks:
-    - name: Read jenkins SSH public key
-      ansible.builtin.slurp:
-        src: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
-      register: ssh_public_key_content
-
-    - name: Extract SSH public key content
-      set_fact:
-        jenkins_ssh_key: "{{ ssh_public_key_content.content | b64decode | replace('\n', '') }}"
-
-    - name: Display SSH public key content
-      debug:
-        var: jenkins_ssh_key
-
-- name: Bootstrap host for use with Jenkins
-  hosts: default
-  gather_facts: no
-  become: yes
-
-  tasks:
-    - name: Run the jenkins_user role
-      include_role:
-        name: jenkins_user
+- hosts: docker
+  roles:
+    - role: docker
 

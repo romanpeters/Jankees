@@ -5,11 +5,19 @@
     state: present
     password: '!'
 
+- name: Read the fetched SSH key
+  ansible.builtin.slurp:
+    src: /tmp/ansible/id_rsa.pub
+  register: ssh_key
+  delegate_to: localhost
+
+
 - name: Add jenkins to authorized hosts
   ansible.posix.authorized_key:
     user: jenkins
     state: present
-    key: "{{ hostvars['jenkins']['jenkins_ssh_key'] }}"
+    key: "{{ ssh_key['content'] | b64decode | string }}"
+  become: true
 
 - name: Add passwordless sudo
   ansible.builtin.lineinfile:
@@ -19,4 +27,5 @@
     mode: 0440
     line: "jenkins		ALL=(ALL:ALL) NOPASSWD:ALL"
     validate: /usr/sbin/visudo -cf %s
+  become: true
 
