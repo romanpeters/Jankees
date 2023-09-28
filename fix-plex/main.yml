@@ -1,26 +1,18 @@
 ---
-- name: Fix Plex
-  hosts: default
-  become: yes
+- hosts: plex
+  become: true
+  gather_facts: no
+  roles:
+    - role: plex
 
-  tasks:
-    - name: fix plex
-      include_role:
-        name: plex
-      delegate_to: plex
+- hosts: romantv
+  become: true
+  gather_facts: no
+  roles:
+    - role: website
 
-    - name: fix softwarr
-      include_role:
-        name: softwarr
-      delegate_to: romantv
-
-    - name: fix vpn
-      include_role:
-        name: vpn
-      delegate_to: nuc
-
-#    - name: check status
-#      include_role:
-#        name: status
-#      delegate_to: localhost
-#      when: status_result.failed 
+- hosts: nuc
+  become: true
+  gather_facts: no
+  roles:
+    - role: vpn

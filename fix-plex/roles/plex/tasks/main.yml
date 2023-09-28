@@ -1,3 +1,10 @@
 ---
-- name: Just reboot it
-  reboot:
+- name: Mount media
+  ansible.builtin.command:
+    cmd: mount -a
+
+- name: Restart Plex
+  ansible.builtin.service:
+    name: plexmediaserver
+    state: restarted
+  when: ansible_env.REALLY | default('false') | bool
