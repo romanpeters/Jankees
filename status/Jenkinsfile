@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control
+                checkout scm
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    // Set the path to your Ansible playbook and inventory file
+                    def ansiblePlaybook = "status/main.yml"
+                    def ansibleInventory = "inventory.ini"
+
+                    // Run the Ansible playbook using the 'ansible-playbook' command
+                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook}"
+                }
+            }
+        }
+    }
+}
