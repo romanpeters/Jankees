@@ -19,7 +19,7 @@
         var: jenkins_ssh_key
 
 - name: Bootstrap host for use with Jenkins
-  hosts: default:!jenkins
+  hosts: default
   gather_facts: no
   become: yes
 
