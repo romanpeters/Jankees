@@ -27,7 +27,6 @@ pipeline {
         success {
             echo 'Ansible playbook executed successfully'
             }
-        }
         failure {
             script {
                 def msg = "Some of your servers seem offline"
