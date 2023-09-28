@@ -22,4 +22,14 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            echo 'Ansible playbook executed successfully'
+        }
+        failure {
+	    sh "curl -d 'System update failed' ${NOTIFY_URL}"
+            echo 'Ansible playbook execution failed'
+        }
+    }
+
 }
