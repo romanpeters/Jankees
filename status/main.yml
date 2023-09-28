@@ -1,6 +1,6 @@
 ---
 - name: Ping hosts
-  hosts: all
+  hosts: all:!unreachable
   gather_facts: no
 
   tasks:
