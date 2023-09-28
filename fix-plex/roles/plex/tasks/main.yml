@@ -3,6 +3,13 @@
   ansible.builtin.command:
     cmd: mount -a
 
+- name: Update repositories cache and install "foo" package
+  ansible.builtin.apt:
+    name: plexmediaserver
+    update_cache: yes
+  when: ansible_env.UPDATE | default('false') | bool
+  notify: restart plex
+
 - name: Restart Plex
   ansible.builtin.service:
     name: plexmediaserver
