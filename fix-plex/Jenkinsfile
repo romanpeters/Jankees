@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Set the path to your Ansible playbook and inventory file
-                    def ansiblePlaybook = "status/main.yml"
+                    def ansiblePlaybook = "fix-plex/main.yml"
                     def ansibleInventory = "inventory.ini"
 
                     // Run the Ansible playbook using the 'ansible-playbook' command
@@ -25,12 +25,15 @@ pipeline {
 
     post {
         success {
-            echo 'Ansible playbook executed successfully'
+            script {
+                def msg = "I did some things so RTV might work again"
+                sh "curl -d '${msg}' ${NOTIFY_URL}"
+                echo "${msg}"
             }
         }
         failure {
             script {
-                def msg = "Some of your servers seem offline"
+                def msg = "I tried to fix RTV, but failed"
                 sh "curl -d '${msg}' ${NOTIFY_URL}"
                 echo "${msg}"
             }
