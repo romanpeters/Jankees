@@ -4,5 +4,9 @@
   gather_facts: no
 
   tasks:
-    - name: Ping hosts
+    - name: ping hosts
       ping:
+
+    - name: print skipped hosts
+      debug:
+        var: groups['unreachable']
