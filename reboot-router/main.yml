@@ -33,6 +33,11 @@
           CSRFToken: "{{ csrf_token }}"
           reboot: "Reboot"
 
+    - name: Wait for the router to shutdown
+      ansible.builtin.wait_for:
+        timeout: 30
+      delegate_to: localhost
+
     - name: Wait until back online
       uri:
         url: "http://{{ hostvars['router']['ansible_host'] }}/"
@@ -41,5 +46,5 @@
           - 401
       until: uri_output.status == 401
       retries: 120 # Retries for 120 * 5 seconds = 10 minutes
-      delay: 30
+      delay: 5
       register: uri_output
