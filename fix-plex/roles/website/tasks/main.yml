@@ -8,7 +8,7 @@
 - name: Docker compose restart
   community.docker.docker_compose:
     project_src: "{{ docker_compose_path }}"
-    build: "{{ ansible_env.UPDATE | default('false') | bool }}"
+    build: "{{ lookup('env', 'UPDATE', default='false') }}"
     state: present
     restarted: true
   
