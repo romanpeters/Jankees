@@ -19,13 +19,6 @@
       set_fact:
         csrf_token: "{{ page_response.content | regex_findall('name=\"CSRFToken\" lang=\"en\" value=\"(.*?)\"') | first }}"
 
-    - name: Send Notification
-      ansible.builtin.uri:
-        url: "{{ lookup('env', 'NOTIFY_URL' }}"
-        method: POST
-        body: "Rebooting your router..."
-      ignore_errors: yes
-
     - name: Reboot router
       ansible.builtin.uri:
         url: "http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh"
@@ -45,8 +38,8 @@
         url: "http://{{ hostvars['router']['ansible_host'] }}/"
         return_content: yes
         status_code:
-          - 200
-      until: uri_output.status == 200
+          - 401
+      until: uri_output.status == 401
       retries: 120 # Retries for 120 * 5 seconds = 10 minutes
       delay: 30
       register: uri_output
