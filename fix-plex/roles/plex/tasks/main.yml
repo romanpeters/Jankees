@@ -11,6 +11,7 @@
   notify: restart plex
 
 - name: Restart Plex
-  ansible.builtin.command: echo ""
+  debug:
+    msg: Restarting Plex
   when: lookup('ansible.builtin.env', 'REALLY', default=False)
   notify: restart plex
