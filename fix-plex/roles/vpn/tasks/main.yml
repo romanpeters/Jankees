@@ -11,3 +11,22 @@
     build: "{{ lookup('env', 'UPDATE', default='false') }}"
     state: present
     restarted: true
+
+    #- name: Wait until Prowlarr is reachable
+    #  uri:
+    #    url: "{{ prowlarr_url }}"
+    #    return_content: yes
+    #    status_code:
+    #      - 200
+    #  until: uri_output.status == 200
+    #  retries: 24 # Retries for 24 * 5 seconds = 120 seconds = 2 minutes
+    #  delay: 5 # Every 5 seconds
+    #  register: uri_output
+
+    #- name: Prowlarr test indexers
+    #  ansible.builtin.uri:
+    #    url: "{{ prowlarr_url }}/api/v1/applications/testall?apikey={{ lookup('env', 'PROWLARR_API_KEY') }}"
+    #    method: POST
+    #    timeout: 300
+    #    headers:
+    #      accept: "*/*"

@@ -7,11 +7,10 @@
   ansible.builtin.apt:
     name: plexmediaserver
     state: latest
-  when: lookup('env', 'REALLY', default='false') and lookup('env', 'UPDATE', default='false')
+  when: lookup('ansible.builtin.env', 'UPDATE', default=False)
   notify: restart plex
 
 - name: Restart Plex
-  ansible.builtin.service:
-    name: plexmediaserver
-    state: restarted
-  when: lookup('env', 'REALLY', default='false')
+  ansible.builtin.command: echo ""
+  when: lookup('ansible.builtin.env', 'REALLY', default=False)
+  notify: restart plex

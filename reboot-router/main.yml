@@ -39,3 +39,14 @@
         body:
           CSRFToken: "{{ csrf_token }}"
           reboot: "Reboot"
+
+    - name: Wait until back online
+      uri:
+        url: "http://{{ hostvars['router']['ansible_host'] }}/"
+        return_content: yes
+        status_code:
+          - 200
+      until: uri_output.status == 200
+      retries: 120 # Retries for 120 * 5 seconds = 10 minutes
+      delay: 5
+      register: uri_output
