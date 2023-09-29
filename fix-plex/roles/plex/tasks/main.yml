@@ -3,23 +3,16 @@
   ansible.builtin.command:
     cmd: mount -a
 
-- debug:
-    var: lookup('ansible.builtin.env', 'UPDATE')
-
-- debug: 
-    var: lookup('ansible.builtin.env', 'REALLY')
- 
-
 - name: Update Plex server
   ansible.builtin.apt:
     name: plexmediaserver
     state: latest
-  when: lookup('ansible.builtin.env', 'UPDATE', default=False)
+  when: lookup('ansible.builtin.env', 'UPDATE', default="false") == "true" 
   notify: restart plex
 
 - name: Restart Plex
   debug:
     msg: Restarting Plex
   changed_when: true
-  when: lookup('ansible.builtin.env', 'REALLY', default=False)
+  when: lookup('ansible.builtin.env', 'REALLY', default="false") == "true"
   notify: restart plex
