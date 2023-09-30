@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        ROUTER_PASSWORD = credentials('router-password')
+    }
+
     stages {
         stage('Checkout') {
             steps {
