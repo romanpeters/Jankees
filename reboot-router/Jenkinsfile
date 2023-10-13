@@ -8,8 +8,7 @@ pipeline {
    parameters {
         booleanParam(
             name: 'REALLY',
-            description: 'Rebooting the router will temporarily make the internet unavailable. Are you sure?'
-        )
+            description: 'Rebooting the router will temporarily make the internet unavailable. Are you sure?')
     }
 
     stages {
@@ -27,8 +26,7 @@ pipeline {
             steps {
                 ansiblePlaybook(
                     playbook: 'reboot-router/main.yml',
-                    inventory: 'inventory.ini',
-                )
+                    inventory: 'inventory.ini')
             }
         }
     }

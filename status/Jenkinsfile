@@ -4,8 +4,7 @@ pipeline {
     parameters {
         choice(choices: ['default', 'all', 'nuc'],
                description: 'Choose which host or host group.',
-               name: 'TARGET'
-        )
+               name: 'TARGET')
     }
 
     stages {
@@ -21,8 +20,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'status/main.yml',
                     inventory: 'inventory.ini',
-                    limit: params.TARGET
-                )
+                    limit: params.TARGET)
             }
         }
     }
