@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    parameters {
+        choice choices: $GROUPS, 
+        name: 'Host'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -17,7 +22,7 @@ pipeline {
                     def ansibleInventory = "inventory.ini"
 
                     // Run the Ansible playbook using the 'ansible-playbook' command
-                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook}"
+                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook} --limit ${Host}"
                 }
             }
         }
