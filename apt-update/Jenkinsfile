@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         choice(choices: ['default', 'all', 'nuc'], 
-               description: 'Choose which host or host group.', 
+               description: "Choose which host or host group.", 
                name: 'TARGET')
     }
 

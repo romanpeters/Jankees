@@ -4,10 +4,10 @@ pipeline {
     parameters {
         booleanParam(
             name: 'REALLY',
-            description: 'Restarting Plex will disturb users currently watching. Are you sure?')
+            description: "Restarting Plex will disturb users currently watching. Are you sure?")
         booleanParam(
             name: 'UPDATE',
-            description: 'Want to update the service while we're at it?')
+            description: "Want to update the service while we're at it?")
     }
 
 
