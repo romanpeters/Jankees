@@ -18,9 +18,9 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook(
-                    playbook: 'apt-update/main.yml'
+                    playbook: 'apt-update/main.yml',
                     inventory: 'inventory.ini',
-                    limit: 'default',
+                    limit: 'default'
                 )
             }
         }
