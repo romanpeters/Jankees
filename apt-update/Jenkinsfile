@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     parameters {
-        choice choices: ['all', 'default', 'nuc'], 
-        description: 'Choose which host or host group.', 
-        name: 'Host'
+        choice(choices: ['default', 'all', 'nuc'], 
+               description: 'Choose which host or host group.', 
+               name: 'TARGET'
+        )
     }
 
     stages {
@@ -20,7 +21,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'apt-update/main.yml',
                     inventory: 'inventory.ini',
-                    limit: 'default'
+                    limit: params.TARGET
                 )
             }
         }
