@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        choice choices: ${INVENTORY_HOST}, 
+        choice choices: ['all', 'default', 'nuc'], 
+        description: 'Choose which host or host group.', 
         name: 'Host'
     }
 
@@ -16,14 +17,9 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
-                script {
-                    // Set the path to your Ansible playbook and inventory file
-                    def ansiblePlaybook = "apt-update/main.yml"
-                    def ansibleInventory = "inventory.ini"
-
-                    // Run the Ansible playbook using the 'ansible-playbook' command
-                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook} --limit ${Host}"
-                }
+                inventory: 'inventory.ini',
+                limit: $Host,
+                playbook: 'apt-update/main.yml'
             }
         }
     }
