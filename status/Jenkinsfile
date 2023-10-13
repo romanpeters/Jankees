@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(choices: ['default', 'all', 'nuc'],
+               description: 'Choose which host or host group.',
+               name: 'TARGET'
+        )
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,14 +18,11 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
-                script {
-                    // Set the path to your Ansible playbook and inventory file
-                    def ansiblePlaybook = "status/main.yml"
-                    def ansibleInventory = "inventory.ini"
-
-                    // Run the Ansible playbook using the 'ansible-playbook' command
-                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook}"
-                }
+                ansiblePlaybook(
+                    playbook: 'status/main.yml',
+                    inventory: 'inventory.ini',
+                    limit: params.TARGET
+                )
             }
         }
     }

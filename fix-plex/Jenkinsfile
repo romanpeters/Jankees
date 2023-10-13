@@ -1,6 +1,18 @@
 pipeline {
     agent any
 
+    parameters {
+        booleanParam(
+            name: 'REALLY',
+            description: 'Restarting Plex will disturb users currently watching. Are you sure?'
+        ),
+        booleanParam(
+            name: 'UPDATE',
+            description: 'Want to update the service while we're at it?'
+        )
+    }
+
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,14 +23,10 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
-                script {
-                    // Set the path to your Ansible playbook and inventory file
-                    def ansiblePlaybook = "fix-plex/main.yml"
-                    def ansibleInventory = "inventory.ini"
-
-                    // Run the Ansible playbook using the 'ansible-playbook' command
-                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook}"
-                }
+                ansiblePlaybook(
+                    playbook: 'fix-plex/main.yml',
+                    inventory: 'inventory.ini',
+                )
             }
         }
     }

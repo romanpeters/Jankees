@@ -5,6 +5,13 @@ pipeline {
         ROUTER_PASSWORD = credentials('router-password')
     }
 
+   parameters {
+        booleanParam(
+            name: 'REALLY',
+            description: 'Rebooting the router will temporarily make the internet unavailable. Are you sure?'
+        )
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -18,14 +25,10 @@ pipeline {
                 expression { params.REALLY == true }
             }
             steps {
-                script {
-                    // Set the path to your Ansible playbook and inventory file
-                    def ansiblePlaybook = "reboot-router/main.yml"
-                    def ansibleInventory = "reboot-router/inventory.ini"
-
-                    // Run the Ansible playbook using the 'ansible-playbook' command
-                    sh "ansible-playbook -i ${ansibleInventory} ${ansiblePlaybook}"
-                }
+                ansiblePlaybook(
+                    playbook: 'reboot-router/main.yml',
+                    inventory: 'inventory.ini',
+                )
             }
         }
     }
