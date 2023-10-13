@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        choice choices: $GROUPS, 
+        choice choices: ${INVENTORY_HOST}, 
         name: 'Host'
     }
 
