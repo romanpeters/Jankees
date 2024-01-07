@@ -51,3 +51,12 @@
     group: "{{ username }}"
     mode: '0600'
 
+- name: Install Zsh
+  package:
+    name: zsh
+    state: present
+
+- name: Change user's shell to Zsh
+  user:
+    name: "{{ username }}"
+    shell: /bin/zsh
