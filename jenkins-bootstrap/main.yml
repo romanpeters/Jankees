@@ -6,8 +6,3 @@
 - hosts: default
   roles:
     - role: jenkins_user
-
-- hosts: docker
-  roles:
-    - role: docker
-

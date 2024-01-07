@@ -1,7 +1,0 @@
----
-- name: Add jenkins to docker group
-  ansible.builtin.user:
-    name: jenkins
-    groups: docker
-    append: true
-  when: "'docker' in group_names"

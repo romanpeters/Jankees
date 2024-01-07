@@ -1,5 +1,5 @@
 ---
-- name: Install package updates
+- name: Reboot router
   hosts: localhost
   gather_facts: no
 

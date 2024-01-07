@@ -11,7 +11,6 @@
   register: ssh_key
   delegate_to: localhost
 
-
 - name: Add jenkins to authorized hosts
   ansible.posix.authorized_key:
     user: jenkins
@@ -28,4 +27,11 @@
     line: "jenkins		ALL=(ALL:ALL) NOPASSWD:ALL"
     validate: /usr/sbin/visudo -cf %s
   become: true
+  
+- name: Add jenkins to docker group
+  ansible.builtin.user:
+    name: jenkins
+    groups: docker
+    append: true
+  when: "'docker' in group_names"
 
