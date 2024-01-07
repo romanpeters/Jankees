@@ -2,7 +2,10 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'INSTANCE', defaultValue: '', description: 'Specify the instance variable')
+        string(name: 'INSTANCE',
+            description: 'Specify the instance variable')
+        string(name: 'TAGS',
+            description: 'Options: docker, production')
     }
 
     stages {
@@ -18,7 +21,8 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'server/main.yml',
                     inventory: 'inventory.ini',
-                    )
+                    extras: '-e instance="$INSTANCE"')
+
             }
         }
     }

@@ -4,3 +4,5 @@
   become: true
   roles:
     - name: base
+    - name: docker
+      tags: docker
