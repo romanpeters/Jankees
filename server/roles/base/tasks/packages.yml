@@ -8,6 +8,7 @@
       - tmux
       - lolcat
       - toilet
+      - cowsay
       - sl
     state: present
   tags: packages
