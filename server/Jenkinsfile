@@ -19,7 +19,7 @@ pipeline {
                     playbook: 'server/main.yml',
                     inventory: 'inventory.ini',
                     extraVars: [
-                        instance: '${params.INSTANCE}'
+                        instance: ${params.INSTANCE}
                     ])
             }
         }
