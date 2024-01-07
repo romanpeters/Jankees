@@ -4,7 +4,3 @@
   become: true
   roles:
     - name: base
-    - name: docker
-      tags: docker
-    - name: production
-      tags: production

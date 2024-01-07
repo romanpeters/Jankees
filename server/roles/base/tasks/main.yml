@@ -1,7 +1,11 @@
 ---
 # tasks file for base
-- name: Include base role tasks
-  include_tasks: 
-    - packages.yml
-    - user.yml
-    - zsh.yml
+- name: Include packages role tasks
+  include_tasks: packages.yml
+
+- name: Include user role tasks
+  include_tasks: user.yml
+
+- name: Include zshell role tasks
+  include_tasks: zsh.yml
+
