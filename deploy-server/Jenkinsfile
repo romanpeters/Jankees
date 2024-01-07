@@ -22,8 +22,9 @@ pipeline {
                     playbook: 'deploy-server/main.yml',
                     inventory: 'inventory.ini',
                     tags: params.TAGS,
-                    extras: '-e instance="${params.INSTANCE}"')
-
+                    extraVars: [
+                        instance: params.INSTANCE
+                    ])
             }
         }
     }
