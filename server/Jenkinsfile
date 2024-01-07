@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'INSTANCE', defaultValue: '', description: 'Specify the instance variable')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control
+                checkout scm
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'server/main.yml',
+                    inventory: 'inventory.ini',
+                    extraVars: "INSTANCE=${params.INSTANCE}")
+            }
+        }
+    }
+}
+

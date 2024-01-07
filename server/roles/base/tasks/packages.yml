@@ -1,0 +1,13 @@
+---
+- name: Install packages
+  become: yes
+  apt:
+    name:
+      - vim
+      - git
+      - tmux
+      - lolcat
+      - toilet
+      - sl
+    state: present
+  tags: packages

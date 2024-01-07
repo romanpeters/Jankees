@@ -1,0 +1,49 @@
+---
+- name: Create user
+  user:
+    name: "{{ username }}"
+    state: present
+    createhome: yes
+
+- name: Add to sudoers file
+  lineinfile:
+    path: /etc/sudoers.d/{{ username }}
+    line: "{{ username }} ALL=(ALL:ALL) NOPASSWD:ALL"
+    create: yes
+
+- name: Set permissions on sudoers file
+  file:
+    path: /etc/sudoers.d/{{ username }}
+    owner: root
+    group: root
+    mode: '0440'
+
+- name: Ensure .ssh directory exists
+  file:
+    path: "/home/{{ username }}/.ssh"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0700'
+
+- name: Ensure authorized_keys file exists
+  file:
+    path: "/home/{{ username }}/.ssh/authorized_keys"
+    state: touch
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0600'
+
+- name: Add specific SSH key to authorized_keys
+  lineinfile:
+    path: "/home/{{ username }}/.ssh/authorized_keys"
+    line: "{{ lookup('file', 'files/id_rsa.pub') }}"
+    create: yes
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0600'
+
+- name: Create SSH config file
+  template:
+    src: ssh_config.j2
+    dest: ~/.ssh/config

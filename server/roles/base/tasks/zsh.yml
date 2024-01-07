@@ -1,0 +1,29 @@
+---
+- name: Install Zsh and Oh My Zsh
+  hosts: your_target_host
+  become: yes
+  become_user: "{{ username }}"
+
+  tasks:
+    - name: Install Zsh
+      package:
+        name: zsh
+        state: present
+
+    - name: Clone Oh My Zsh repository
+      git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: "{{ ansible_env.HOME }}/.oh-my-zsh"
+      become_user: "{{ username }}"
+
+    - name: Copy .zshrc from files directory
+      copy:
+        src: files/zshrc
+        dest: "{{ ansible_env.HOME }}/.zshrc"
+      become_user: "{{ username }}"
+
+    - name: Change user's shell to Zsh
+      user:
+        name: "{{ username }}"
+        shell: /bin/zsh
+
