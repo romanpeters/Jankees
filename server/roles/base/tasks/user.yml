@@ -44,6 +44,10 @@
     mode: '0600'
 
 - name: Create SSH config file
-  template:
-    src: ssh_config.j2
-    dest: ~/.ssh/config
+  copy:
+    src: ssh_config
+    dest: "/home/{{ username }}/.ssh/config"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0600'
+
