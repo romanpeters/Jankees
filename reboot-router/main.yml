@@ -1,27 +1,27 @@
 ---
 - name: Reboot router
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
 
   tasks:
     - name: Get CSRFToken
       ansible.builtin.uri:
-        url: "http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh"
+        url: http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh
         validate_certs: false
         user: admin
         password: "{{ lookup('env', 'ROUTER_PASSWORD') }}"
         method: GET
-        return_content: yes
+        return_content: true
         status_code: 200
       register: page_response
 
     - name: Extract CSRFToken
-      set_fact:
+      ansible.builtin.set_fact:
         csrf_token: "{{ page_response.content | regex_findall('name=\"CSRFToken\" lang=\"en\" value=\"(.*?)\"') | first }}"
 
     - name: Reboot router
       ansible.builtin.uri:
-        url: "http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh"
+        url: http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh
         validate_certs: false
         user: admin
         password: "{{ lookup('env', 'ROUTER_PASSWORD') }}"
@@ -31,7 +31,7 @@
         body_format: form-urlencoded
         body:
           CSRFToken: "{{ csrf_token }}"
-          reboot: "Reboot"
+          reboot: Reboot
 
     - name: Wait for the router to shutdown
       ansible.builtin.wait_for:
@@ -39,9 +39,9 @@
       delegate_to: localhost
 
     - name: Wait until back online
-      uri:
-        url: "http://{{ hostvars['router']['ansible_host'] }}/"
-        return_content: yes
+      ansible.builtin.uri:
+        url: http://{{ hostvars['router']['ansible_host'] }}/
+        return_content: true
         status_code:
           - 401
       until: uri_output.status == 401

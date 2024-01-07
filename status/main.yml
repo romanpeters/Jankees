@@ -1,12 +1,12 @@
 ---
 - name: Ping hosts
   hosts: all:!unreachable
-  gather_facts: no
+  gather_facts: false
 
   tasks:
-    - name: ping hosts
-      ping:
+    - name: Ping hosts
+      ansible.builtin.ping:
 
-    - name: print skipped hosts
-      debug:
+    - name: Print skipped hosts
+      ansible.builtin.debug:
         var: groups['unreachable']

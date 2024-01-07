@@ -11,4 +11,3 @@
     build: "{{ lookup('env', 'UPDATE', default='false') }}"
     state: present
     restarted: true
-  

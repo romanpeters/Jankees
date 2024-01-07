@@ -1,3 +1,4 @@
+---
 - name: Get public SSH key
   ansible.builtin.fetch:
     src: /var/lib/jenkins/.ssh/id_rsa.pub

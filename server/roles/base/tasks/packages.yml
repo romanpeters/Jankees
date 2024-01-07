@@ -1,7 +1,7 @@
 ---
 - name: Install packages
-  become: yes
-  apt:
+  become: true
+  ansible.builtin.apt:
     name:
       - vim
       - git

@@ -3,7 +3,7 @@
   ansible.builtin.user:
     name: jenkins
     state: present
-    password: '!'
+    password: "!"
 
 - name: Read the fetched SSH key
   ansible.builtin.slurp:
@@ -23,15 +23,14 @@
     path: /etc/sudoers
     state: present
     create: true
-    mode: 0440
-    line: "jenkins		ALL=(ALL:ALL) NOPASSWD:ALL"
+    mode: "0440"
+    line: "jenkins\t\tALL=(ALL:ALL) NOPASSWD:ALL"
     validate: /usr/sbin/visudo -cf %s
   become: true
-  
+
 - name: Add jenkins to docker group
   ansible.builtin.user:
     name: jenkins
     groups: docker
     append: true
   when: "'docker' in group_names"
-

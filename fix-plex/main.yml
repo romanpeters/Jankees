@@ -1,18 +1,18 @@
 ---
 - hosts: plex
   become: true
-  gather_facts: no
+  gather_facts: false
   roles:
     - role: plex
 
 - hosts: romantv
   become: true
-  gather_facts: no
+  gather_facts: false
   roles:
     - role: website
 
 - hosts: nuc
   become: true
-  gather_facts: no
+  gather_facts: false
   roles:
     - role: vpn
