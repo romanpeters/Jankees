@@ -19,9 +19,10 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook(
-                    playbook: 'server/main.yml',
+                    playbook: 'deploy-server/main.yml',
                     inventory: 'inventory.ini',
-                    extras: '-e instance="$INSTANCE"')
+                    tags: params.TAGS,
+                    extras: '-e instance="${params.INSTANCE}"')
 
             }
         }

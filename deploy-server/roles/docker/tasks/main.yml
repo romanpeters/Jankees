@@ -1,6 +1,5 @@
 ---
 # tasks file for docker
----
 - name: Update package cache
   apt:
     update_cache: yes
@@ -32,9 +31,9 @@
     name: docker-ce
     state: present
 
-- name: Add user to docker group (replace 'your_user' with your actual username)
+- name: Add user to docker group
   user:
-    name: your_user
+    name: "{{ username }}"
     groups: docker
     append: yes
 
