@@ -1,6 +1,6 @@
 ---
 - name: Configure server
-  hosts: "{{ instance }}"
+  hosts: "{{ lookup('env','INSTANCE') }}"
   become: true
   roles:
     - name: base
