@@ -18,9 +18,8 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'server/main.yml',
                     inventory: 'inventory.ini',
-                    extraVars: [
-                        instance: ${params.INSTANCE}
-                    ])
+                    extraVars: ['INSTANCE=${params.INSTANCE}']
+                    )
             }
         }
     }
