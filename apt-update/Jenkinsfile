@@ -19,7 +19,7 @@ pipeline {
             steps {
                 ansiblePlaybook(
                     playbook: 'apt-update/main.yml',
-                    inventory: 'inventory.ini',
+                    inventory: 'infrastructure/inventory.ini',
                     limit: params.TARGET)
             }
         }
