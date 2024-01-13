@@ -18,9 +18,11 @@ pipeline {
                       extensions: [],
                       userRemoteConfigs: [
                           [credentialsId: 'jenkins-ssh-id',
-                          url: 'git@github.com:romanpeters/maintenance-playbooks.git'],
+                          url: 'git@github.com:romanpeters/maintenance-playbooks.git',
+                          subdir: 'maintenance-playbooks'],
                           [credentialsId: 'jenkins-ssh-id',
-                          url: 'git@github.com:romanpeters/infrastructure.git']
+                          url: 'git@github.com:romanpeters/infrastructure.git',
+                          subdir: 'infrastructure']
                       ]
                   )
               )
@@ -30,7 +32,7 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook(
-                    playbook: 'status/main.yml',
+                    playbook: 'maintenance-playbooks/status/main.yml',
                     inventory: 'infrastructure/inventory.ini',
                     limit: params.TARGET)
             }
