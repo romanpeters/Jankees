@@ -11,18 +11,30 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout your source code from version control
-              checkout(
-                  poll: false,
-                  scm: scmGit(
-                      branches: [[name: '*/main']],
-                      extensions: [],
-                      userRemoteConfigs: [
-                          [credentialsId: 'jenkins-ssh-id',
-                          url: 'git@github.com:romanpeters/maintenance-playbooks.git',
-                          subdir: 'maintenance-playbooks'],
-                      ]
-                  )
-              )
+                checkout(
+                    [
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [
+                        [
+                        $class: 'SubmoduleOption', 
+                        disableSubmodules: false, 
+                        parentCredentials: true, 
+                        recursiveSubmodules: true, 
+                        reference: '', 
+                        trackingSubmodules: false
+                        ]
+                    ], 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [
+                        [
+                        credentialsId: 'jenkins-ssh-id', 
+                        url: 'git@github.com:romanpeters/maintenance-playbooks.git'
+                        ]
+                    ]
+                  ]
+                )
             }
         }
 
