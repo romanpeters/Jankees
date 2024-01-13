@@ -1,7 +1,0 @@
----
-# vars file for production
-docker_services:
-  - changedetection
-  - hello
-  - homebox
-  - uptime-tan
