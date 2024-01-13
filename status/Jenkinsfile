@@ -15,11 +15,24 @@ pipeline {
             }
         }
 
+        stage('Fetch Inventory') {
+            steps {
+                // Clone the Git repository using SSH
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'infrastructure']]
+                    ],
+                ])
+            }
+        }
+
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook(
                     playbook: 'status/main.yml',
-                    inventory: 'inventory.ini',
+                    inventory: 'infrastructure/inventory.ini',
                     limit: params.TARGET)
             }
         }
