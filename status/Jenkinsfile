@@ -14,26 +14,16 @@ pipeline {
               checkout(
                   poll: false,
                   scm: scmGit(
-                  branches: [[name: '*/main']],
-                  extensions: [],
-                  userRemoteConfigs: [
-                      [credentialsId: 'jenkins-ssh-id',
-                      url: 'git@github.com:romanpeters/maintenance-playbooks.git'],
-                      [credentialsId: 'jenkins-ssh-id',
-                      url: 'git@github.com:romanpeters/infrastructure.git']
-                  ])
+                      branches: [[name: '*/main']],
+                      extensions: [],
+                      userRemoteConfigs: [
+                          [credentialsId: 'jenkins-ssh-id',
+                          url: 'git@github.com:romanpeters/maintenance-playbooks.git'],
+                          [credentialsId: 'jenkins-ssh-id',
+                          url: 'git@github.com:romanpeters/infrastructure.git']
+                      ]
+                  )
               )
-            }
-        }
-
-        stage('Fetch Inventory') {
-            steps {
-                // Clone the Git repository using SSH
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'infrastructure']]
-                ])
             }
         }
 
