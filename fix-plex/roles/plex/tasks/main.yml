@@ -15,4 +15,4 @@
     msg: Restarting Plex
   changed_when: true
   when: lookup('ansible.builtin.env', 'REALLY', default="false") == "true"
-  notify: restart plex
+  notify: Restart plex
