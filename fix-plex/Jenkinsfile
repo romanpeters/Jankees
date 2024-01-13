@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        ansiColor('xterm')
+    }
+
     parameters {
         booleanParam(
             name: 'REALLY',
@@ -34,7 +38,8 @@ pipeline {
             steps {
                 ansiblePlaybook(
                     playbook: 'fix-plex/main.yml',
-                    inventory: 'infrastructure/inventory.ini')
+                    inventory: 'infrastructure/inventory.ini',
+                    colorized: true)
             }
         }
     }

@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        ansiColor('xterm')
+    }
+
     parameters {
          string(name: 'COMMAND',
              description: 'Command to run on all hosts'),
@@ -33,6 +37,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'command/main.yml',
                     inventory: 'infrastructure/inventory.ini',
+                    colorized: true,
                     limit: params.TARGET)
             }
         }

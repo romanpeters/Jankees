@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        ansiColor('xterm')
+    }
+
     parameters {
         choice(choices: ['default', 'all', 'nuc'],
                description: "Choose which host or host group.",
@@ -37,6 +41,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'status/main.yml',
                     inventory: 'infrastructure/inventory.ini',
+                    colorized: true,
                     limit: params.TARGET)
             }
         }

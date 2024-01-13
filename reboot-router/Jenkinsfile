@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        ansiColor('xterm')
+    }
+
     environment {
         ROUTER_PASSWORD = credentials('router-password')
     }
@@ -37,7 +41,8 @@ pipeline {
             steps {
                 ansiblePlaybook(
                     playbook: 'reboot-router/main.yml',
-                    inventory: 'infrastructure/inventory.ini')
+                    inventory: 'infrastructure/inventory.ini',
+                    colorized: true)
             }
         }
     }
