@@ -1,0 +1,10 @@
+---
+- name: Command
+  hosts: default
+  gather_facts: false
+
+  tasks:
+    - name: Run command
+      ansible.builtin.command:
+        cmd: "{{ lookup('env', 'COMMAND') }}"
+

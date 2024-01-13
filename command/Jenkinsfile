@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    parameters {
+         string(name: 'COMMAND',
+             description: 'Command to run on all hosts'),
+         string(name: 'LIMIT',
+             description: 'Limit to specific hosts or groups')
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']], 
+                          doGenerateSubmoduleConfigurations: false, 
+                          extensions: [[$class: 'SubmoduleOption', 
+                                        disableSubmodules: false, 
+                                        parentCredentials: true, 
+                                        recursiveSubmodules: true, 
+                                        reference: '', 
+                                        trackingSubmodules: true]], 
+                          submoduleCfg: [], 
+                          userRemoteConfigs: [[credentialsId: 'jenkins-ssh-id', 
+                              url: 'git@github.com:romanpeters/maintenance-playbooks.git']]])
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'command/main.yml',
+                    inventory: 'infrastructure/inventory.ini',
+                    limit: params.TARGET)
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Ansible playbook executed successfully'
+            }
+        failure {
+            script {
+                def msg = "Some of your servers seem offline"
+                sh "curl -d '${msg}' ${NOTIFY_URL}"
+                echo "${msg}"
+            }
+        }
+    }
+}
