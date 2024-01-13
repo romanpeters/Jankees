@@ -20,9 +20,6 @@ pipeline {
                           [credentialsId: 'jenkins-ssh-id',
                           url: 'git@github.com:romanpeters/maintenance-playbooks.git',
                           subdir: 'maintenance-playbooks'],
-                          [credentialsId: 'jenkins-ssh-id',
-                          url: 'git@github.com:romanpeters/infrastructure.git',
-                          subdir: 'infrastructure']
                       ]
                   )
               )
@@ -32,7 +29,7 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook(
-                    playbook: 'maintenance-playbooks/status/main.yml',
+                    playbook: 'status/main.yml',
                     inventory: 'infrastructure/inventory.ini',
                     limit: params.TARGET)
             }
