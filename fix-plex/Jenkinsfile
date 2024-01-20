@@ -39,7 +39,11 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'fix-plex/main.yml',
                     inventory: 'infrastructure/inventory.ini',
-                    colorized: true)
+                    colorized: true,
+                    extraVars {
+                       extraVar("really", params.REALLY, false),
+                       extraVar("update", params.UPDATE, false)
+                    })
             }
         }
     }

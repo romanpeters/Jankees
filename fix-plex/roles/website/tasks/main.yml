@@ -8,6 +8,6 @@
 - name: Docker compose restart
   community.docker.docker_compose:
     project_src: "{{ docker_compose_path }}"
-    build: "{{ lookup('env', 'UPDATE', default='false') }}"
+    build: update | default(false)
     state: present
     restarted: true
