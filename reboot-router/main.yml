@@ -9,7 +9,7 @@
         url: http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh
         validate_certs: false
         user: admin
-        password: "{{ lookup('env', 'ROUTER_PASSWORD') }}"
+        password: "{{ router_password }}"
         method: GET
         return_content: true
         status_code: 200
@@ -24,7 +24,7 @@
         url: http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh
         validate_certs: false
         user: admin
-        password: "{{ lookup('env', 'ROUTER_PASSWORD') }}"
+        password: "{{ router_password }}"
         method: POST
         force_basic_auth: true
         status_code: 200

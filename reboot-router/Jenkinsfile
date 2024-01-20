@@ -42,7 +42,9 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'reboot-router/main.yml',
                     inventory: 'infrastructure/inventory.ini',
-                    colorized: true)
+                    colorized: true,
+                    extraVars: {
+                       extraVar("command", params.ROUTER_PASSWORD, true)})
             }
         }
     }

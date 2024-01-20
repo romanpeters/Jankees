@@ -40,10 +40,9 @@ pipeline {
                     playbook: 'fix-plex/main.yml',
                     inventory: 'infrastructure/inventory.ini',
                     colorized: true,
-                    extraVars {
+                    extraVars: {
                        extraVar("really", params.REALLY, false),
-                       extraVar("update", params.UPDATE, false)
-                    })
+                       extraVar("update", params.UPDATE, false)})
             }
         }
     }
