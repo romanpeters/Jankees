@@ -38,7 +38,10 @@ pipeline {
                     playbook: 'command/main.yml',
                     inventory: 'infrastructure/inventory.ini',
                     colorized: true,
-                    limit: params.TARGET)
+                    limit: params.TARGET),
+                    extraVars {
+                       extraVar("command", params.COMMAND, false)
+                    }
             }
         }
     }
