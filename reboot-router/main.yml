@@ -3,9 +3,16 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - vault.yml
+    - ../vault.yml
 
   tasks:
+    - name: Check if there is internet connectivity
+      uri:
+        url: https://google.com
+        status_code: 200
+      register: internet_check
+      ignore_errors: true
+
     - name: Get CSRFToken
       ansible.builtin.uri:
         url: http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh
@@ -16,10 +23,12 @@
         return_content: true
         status_code: 200
       register: page_response
+      when: internet_check.failed
 
     - name: Extract CSRFToken
       ansible.builtin.set_fact:
         csrf_token: "{{ page_response.content | regex_findall('name=\"CSRFToken\" lang=\"en\" value=\"(.*?)\"') | first }}"
+      when: internet_check.failed
 
     - name: Reboot router
       ansible.builtin.uri:
@@ -34,11 +43,15 @@
         body:
           CSRFToken: "{{ csrf_token }}"
           reboot: Reboot
+      when: internet_check.failed
+      notify:
+        - Wait for router to shutdown
+        - Wait until back online
 
+  handlers:
     - name: Wait for the router to shutdown
       ansible.builtin.wait_for:
         timeout: 30
-      delegate_to: localhost
 
     - name: Wait until back online
       ansible.builtin.uri:
