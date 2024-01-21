@@ -8,11 +8,9 @@
     name: plexmediaserver
     state: latest
   when: update | default(false)
-  notify: restart plex
 
 - name: Restart Plex
-  ansible.builtin.debug:
-    msg: Restarting Plex
-  changed_when: true
-  when: really | default(false)
-  notify: Restart plex
+  ansible.builtin.service:
+    name: plexmediaserver
+    state: restarted
+  when: restart_plex | default(false)

@@ -2,17 +2,17 @@
 - hosts: plex
   become: true
   gather_facts: false
-  roles:
-    - role: plex
+  tasks:
+    - include_tasks: tasks/plex.yml
 
 - hosts: romantv
   become: true
   gather_facts: false
-  roles:
-    - role: website
+  tasks:
+    - include_tasks: tasks/webservices.yml
 
 - hosts: nuc
   become: true
   gather_facts: false
-  roles:
-    - role: vpn
+  tasks:
+    - include_tasks: tasks/vpn.yml

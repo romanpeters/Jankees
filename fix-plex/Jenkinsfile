@@ -41,7 +41,7 @@ pipeline {
                     inventory: 'infrastructure/inventory.ini',
                     colorized: true,
                     extraVars: {
-                       extraVar("really", params.REALLY, false),
+                       extraVar("restart_plex", params.REALLY, false),
                        extraVar("update", params.UPDATE, false)})
             }
         }
