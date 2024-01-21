@@ -2,13 +2,15 @@
 - name: Reboot router
   hosts: localhost
   gather_facts: false
+  vars_files:
+    - vault.yml
 
   tasks:
     - name: Get CSRFToken
       ansible.builtin.uri:
         url: http://{{ hostvars['router']['ansible_host'] }}/cgi-bin/reboot.sh
         validate_certs: false
-        user: admin
+        user: "{{ router_username }}"
         password: "{{ router_password }}"
         method: GET
         return_content: true
