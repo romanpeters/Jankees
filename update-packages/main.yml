@@ -1,6 +1,7 @@
 ---
 - name: Install package updates
   hosts: default
+  strategy: ansible.builtin.free
 
   tasks:
     - name: Update and upgrade apt packages
@@ -10,6 +11,7 @@
         update_cache: true
         autoremove: true
       when: "'apt' == ansible_pkg_mgr"
+      tags: "apt"
 
     - name: Update and upgrade packages on RHEL
       become: true
@@ -17,5 +19,6 @@
         name: '*'
         state: latest
       when: "'dnf' == ansible_pkg_mgr"
+      tags: "dnf"
 
 
