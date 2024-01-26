@@ -1,10 +1,4 @@
 ---
-- name: Pip install docker
-  ansible.builtin.pip:
-    name:
-      - docker
-      - docker-compose
-
 - name: Docker compose restart
   community.docker.docker_compose:
     project_src: "{{ docker_compose_path }}"
