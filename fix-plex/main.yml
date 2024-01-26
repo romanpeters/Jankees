@@ -5,14 +5,7 @@
   tasks:
     - include_tasks: tasks/plex.yml
 
-- hosts: romantv
-  become: true
+- hosts: romantv,nuc
   gather_facts: false
   tasks:
-    - include_tasks: tasks/webservices.yml
-
-- hosts: nuc
-  become: true
-  gather_facts: false
-  tasks:
-    - include_tasks: tasks/vpn.yml
+    - include_tasks: tasks/restart_docker.yml
