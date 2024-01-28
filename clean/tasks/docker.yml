@@ -1,16 +1,16 @@
 ---
 - name: Prune Docker containers
-  community.general.docker_prune:
+  community.docker.docker_prune:
     containers: true
 
 - name: Prune Docker images
-  community.general.docker_prune:
+  community.docker.docker_prune:
     images: true
 
 - name: Prune Docker volumes
-  community.general.docker_prune:
+  community.docker.docker_prune:
     volumes: true
 
 - name: Prune Docker networks
-  community.general.docker_prune:
+  community.docker.docker_prune:
     networks: true
