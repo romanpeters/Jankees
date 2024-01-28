@@ -1,5 +1,6 @@
 ---
-- hosts: default
+- name: Add user
+  hosts: default
   become: true
 
   tasks:
@@ -20,7 +21,6 @@
 
     - name: Add ssh key to authorized hosts
       ansible.posix.authorized_key:
-        user:  "{{ username }}"
+        user: "{{ username }}"
         state: present
         key: "{{ lookup('file', 'files/id_rsa.pub') }}"
-

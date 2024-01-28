@@ -7,4 +7,3 @@
     - name: Run command
       ansible.builtin.command:
         cmd: "{{ command }}"
-

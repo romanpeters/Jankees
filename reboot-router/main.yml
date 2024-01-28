@@ -7,7 +7,7 @@
 
   tasks:
     - name: Check if there is internet connectivity
-      uri:
+      ansible.builtin.uri:
         url: https://google.com
         status_code: 200
       register: internet_check

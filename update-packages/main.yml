@@ -11,14 +11,12 @@
         update_cache: true
         autoremove: true
       when: "'apt' == ansible_pkg_mgr"
-      tags: "apt"
+      tags: apt
 
     - name: Update and upgrade packages on RHEL
       become: true
       ansible.builtin.dnf:
-        name: '*'
+        name: "*"
         state: latest
       when: "'dnf' == ansible_pkg_mgr"
-      tags: "dnf"
-
-
+      tags: dnf

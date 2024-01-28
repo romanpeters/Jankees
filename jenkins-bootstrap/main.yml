@@ -1,9 +1,0 @@
----
-- hosts: jenkins
-  roles:
-    - role: ssh
-
-- hosts: default
-  become: true
-  roles:
-    - role: jenkins_user

@@ -1,0 +1,13 @@
+---
+- name: Run Home Assistant OS update command
+  ansible.builtin.command: ha os update
+- name: Wait for Home Assistant to become available
+  ansible.builtin.wait_for:
+    host: "{{ inventory_hostname }}"
+    port: 8123
+    state: started
+    timeout: 300
+  delegate_to: localhost
+
+- name: Run Home Assistant Core update command
+  ansible.builtin.command: ha core update

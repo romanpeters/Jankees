@@ -1,10 +1,10 @@
 ---
 - name: Mount media
-  ansible.builtin.mount:
-    src: "10.10.10.99:/volume1/media"
+  ansible.posix.mount:
+    src: 10.10.10.99:/volume1/media
     path: /mnt/media
     fstype: nfs
-    opts: "rw,hard,intr,rsize=131072,wsize=131072,timeo=30,retrans=10"
+    opts: rw,hard,intr,rsize=131072,wsize=131072,timeo=30,retrans=10
     state: mounted
 
 - name: Update Plex server

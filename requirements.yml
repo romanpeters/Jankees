@@ -1,4 +1,4 @@
+---
 collections:
   - name: community.docker
-    src: https://galaxy.ansible.com
-
+  - name: ansible.posix

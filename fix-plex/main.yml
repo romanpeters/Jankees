@@ -1,11 +1,15 @@
 ---
-- hosts: plex
+- name: Fix Plex
+  hosts: plex
   become: true
   gather_facts: false
   tasks:
-    - include_tasks: tasks/plex.yml
+    - name: Restart Plex
+      ansible.builtin.include_tasks: tasks/plex.yml
 
-- hosts: romantv,nuc
+- name: Restart VPN and web Docker containers
+  hosts: romantv,nuc
   gather_facts: false
   tasks:
-    - include_tasks: tasks/restart_docker.yml
+    - name: Restart Docker
+      ansible.builtin.include_tasks: tasks/restart_docker.yml
