@@ -1,0 +1,5 @@
+---
+- name: Perform apt autoremove
+  ansible.builtin.apt:
+    autoclean: true
+    autoremove: true

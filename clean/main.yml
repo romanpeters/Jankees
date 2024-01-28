@@ -1,0 +1,14 @@
+---
+- name: Clean unnecessary files
+  hosts: default
+  become: true
+  tasks:
+    - name: Docker prune
+      ansible.builtin.include_tasks: tasks/docker.yml
+      when: "'docker' in group_names"
+      tags: docker
+
+    - name: APT autoremove
+      ansible.builtin.include_tasks: tasks/apt.yml
+      when: "'apt' == ansible_pkg_mgr"
+      tags: apt
