@@ -1,27 +1,5 @@
 ---
-- name: Get the list of active torrents
-  ansible.builtin.uri:
-    url: http://10.10.20.20:9091/transmission/rpc
-    method: POST
-    headers:
-      X-Transmission-Session-Id: "{{ session_id }}"
-    body: '{"method": "torrent-get", "arguments": {"fields": ["id"]}}'
-    status_code: 200
-    body_format: json
-  register: torrent_list
-
-- name: Remove torrents
-  ansible.builtin.uri:
-    url: http://10.10.20.20:9091/transmission/rpc
-    method: POST
-    headers:
-      X-Transmission-Session-Id: "{{ session_id }}"
-    body: '{"method": "torrent-remove", "arguments": {"ids": "{{ item.id }}"}}'
-    status_code: 200
-    body_format: json
-  loop: "{{ torrent_list.json.arguments.torrents }}"
-
-- name: Ansible delete file glob
+- name: Clear files
   ansible.builtin.shell: /bin/rm -rf {{ item }}/*
   loop:
     - /mnt/media/movies/.deleted
