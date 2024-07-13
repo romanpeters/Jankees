@@ -4,5 +4,5 @@
   loop:
     - /mnt/media/movies/.deleted
     - /mnt/media/tvseries/.deleted
-    - /mnt/media/downloads/incomplete
+      #    - /mnt/media/downloads/incomplete
     - /mnt/media/downloads/complete
