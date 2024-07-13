@@ -12,3 +12,8 @@
       ansible.builtin.include_tasks: tasks/apt.yml
       when: "'apt' == ansible_pkg_mgr"
       tags: apt
+
+    - name: Plex shrub
+      ansible.builtin.include_tasks: tasks/plex.yml
+      when: inventory_hostname == "plex"
+      tags: plex
