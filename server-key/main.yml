@@ -1,0 +1,17 @@
+---
+- name: Copy server key
+  hosts: default
+  become: true
+  tasks:
+    - name: Create the ~/.credentials directory
+      ansible.builtin.file:
+        path: ~/.credentials
+        state: directory
+        mode: '0700'
+      become: "{{ username }}"
+
+    - name: Write text to server.age file
+      ansible.builtin.copy:
+        dest: ~/.credentials/server.age
+        content: server_key
+        mode: '0600'
